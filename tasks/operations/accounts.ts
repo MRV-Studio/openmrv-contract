@@ -1,0 +1,13 @@
+import { Signer } from "ethers";
+import { task } from "hardhat/config";
+
+// eslint-disable-next-line node/no-missing-import
+import { TASK_ACCOUNTS } from "../task-names";
+
+task(TASK_ACCOUNTS, "Prints the list of accounts", async (_taskArgs, hre) => {
+  const accounts: Signer[] = await hre.ethers.getSigners();
+
+  for (const account of accounts) {
+    console.log(await account.getAddress());
+  }
+});
