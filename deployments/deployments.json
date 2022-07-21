@@ -15,9 +15,9 @@
                   "type": "string"
                 },
                 {
-                  "internalType": "bytes32",
+                  "internalType": "bytes",
                   "name": "_hash",
-                  "type": "bytes32"
+                  "type": "bytes"
                 }
               ],
               "name": "addAnchor",
