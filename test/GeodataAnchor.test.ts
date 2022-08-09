@@ -28,26 +28,29 @@ describe("geodata anchor contract", () => {
 
   describe("add anchor", async () => {
     it("add anchor", async () => {
+      const hash = "0x7cea402e7338643ced";
       const addTx: ContractTransaction = await geodataAnchor.addAnchor(
         "1",
-        ethers.utils.formatBytes32String("7cea402e7338643ced")
+        hash
       );
       const addReceipt: ContractReceipt = await addTx.wait();
       expect(addReceipt.status).to.equal(1);
+
+      const hashReturned = await geodataAnchor.getAnchor("1");
+      expect(hashReturned).to.equal(hash);
     });
     it("revert when adding same anchor id twice", async () => {
-      await geodataAnchor.addAnchor(
-        "1",
-        ethers.utils.formatBytes32String("7cea402e7338643ced")
-      );
+      const hash = "0x7cea402e7338643ced";
+      await geodataAnchor.addAnchor("1", hash);
 
-      // expect await revert with message "Anchor id already exists"
-      await expect(
-        geodataAnchor.addAnchor(
-          "1",
-          ethers.utils.formatBytes32String("7cea402e7338643ced")
-        )
-      ).to.be.revertedWith("Anchor id already exists");
+      await expect(geodataAnchor.addAnchor("1", hash)).to.be.revertedWith(
+        "Anchor id already exists"
+      );
+    });
+    it("revert when anchor not found", async () => {
+      await expect(geodataAnchor.getAnchor("1")).to.be.revertedWith(
+        "Anchor not found"
+      );
     });
   });
 });

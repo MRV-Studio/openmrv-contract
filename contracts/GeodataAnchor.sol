@@ -9,6 +9,16 @@ contract GeodataAnchor {
 
     mapping(string => Anchor) private anchors; // mapping of id to anchor
 
+    // get anchor
+    function getAnchor(string memory _id) public view returns (bytes memory) {
+        Anchor storage anchor = anchors[_id];
+        if (anchor.hash.length == 0) {
+            revert("Anchor not found");
+        }
+
+        return anchor.hash;
+    }
+
     // add anchor
     function addAnchor(string memory _id, bytes memory _hash) public {
         // see if anchor already exists
