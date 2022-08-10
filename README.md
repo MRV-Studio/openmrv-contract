@@ -1,5 +1,5 @@
 # Hardhat Celo Contract for Open MRV Data Anchor
-
+- Please see project description in the openmrv-server [README](https://github.com/MRV-Studio/openmrv-server).
 ## Install Dependencies
 
 ```sh
