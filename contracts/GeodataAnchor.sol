@@ -4,15 +4,15 @@ pragma solidity ^0.8.13;
 contract GeodataAnchor {
 
     struct Anchor {
-        bytes hash;
+        bytes32 hash;
     }
 
     mapping(string => Anchor) private anchors; // mapping of id to anchor
 
     // get anchor
-    function getAnchor(string memory _id) public view returns (bytes memory) {
+    function getAnchor(string memory _id) public view returns (bytes32) {
         Anchor storage anchor = anchors[_id];
-        if (anchor.hash.length == 0) {
+        if (anchor.hash == 0) {
             revert("Anchor not found");
         }
 
@@ -20,12 +20,10 @@ contract GeodataAnchor {
     }
 
     // add anchor
-    function addAnchor(string memory _id, bytes memory _hash) public {
+    function addAnchor(string memory _id, bytes32 _hash) public {
         // see if anchor already exists
         Anchor storage anchor = anchors[_id];
-        if (anchor.hash.length > 0) {
-            revert("Anchor id already exists");
-        }
+        require(anchor.hash == 0, "Anchor id already exists");
 
         Anchor memory newAnchor = Anchor(_hash);
         anchors[_id] = newAnchor;
