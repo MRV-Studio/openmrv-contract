@@ -13,7 +13,7 @@ import "hardhat-deploy-ethers";
 import "./tasks/operations/accounts";
 dotEnvConfig();
 
-const CELO_MNEMONIC = process.env.MNEMONIC;
+const CELO_MNEMONIC = process.env.mnemonic;
 const CELO_DERIVATION_PATH = "m/44'/52752'/0'/0/";
 
 const accounts: HttpNetworkHDAccountsConfig = {
