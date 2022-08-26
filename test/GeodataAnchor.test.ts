@@ -15,10 +15,11 @@ let geodataAnchor: GeodataAnchor;
 // eslint-disable-next-line camelcase
 let geodataAnchorFactory: GeodataAnchor__factory;
 let deployer: SignerWithAddress;
+let other: SignerWithAddress;
 
 describe("geodata anchor contract", () => {
   beforeEach(async () => {
-    [deployer] = await ethers.getSigners();
+    [deployer, other] = await ethers.getSigners();
     geodataAnchorFactory = (await ethers.getContractFactory(
       "GeodataAnchor",
       deployer
@@ -26,14 +27,19 @@ describe("geodata anchor contract", () => {
     geodataAnchor = (await geodataAnchorFactory.deploy()) as GeodataAnchor;
   });
 
+  describe("deployment", async () => {
+    it("deployer is owner", async () => {
+      expect(await geodataAnchor.owner()).to.equal(deployer.address);
+    });
+  });
+
   describe("add anchor", async () => {
     it("add anchor", async () => {
       const hash =
         "0x550bcc97c1dd9295915341fdefe3816aea7963bc53b3f8221684a53776d9755a";
-      const addTx: ContractTransaction = await geodataAnchor.addAnchor(
-        "AczsesvKyE4MD9Lo3RNgA",
-        hash
-      );
+      const addTx: ContractTransaction = await geodataAnchor
+        .connect(deployer)
+        .addAnchor("AczsesvKyE4MD9Lo3RNgA", hash);
       const addReceipt: ContractReceipt = await addTx.wait();
       expect(addReceipt.status).to.equal(1);
 
@@ -41,6 +47,13 @@ describe("geodata anchor contract", () => {
         "AczsesvKyE4MD9Lo3RNgA"
       );
       expect(hashReturned).to.equal(hash);
+    });
+    it("revert when non-owner adds anchor", async () => {
+      const hash =
+        "0x550bcc97c1dd9295915341fdefe3816aea7963bc53b3f8221684a53776d9755a";
+      await expect(
+        geodataAnchor.connect(other).addAnchor("AczsesvKyE4MD9Lo3RNgA", hash)
+      ).to.be.revertedWith("Ownable: caller is not the owner");
     });
     it("revert when adding same anchor id twice", async () => {
       const hash =

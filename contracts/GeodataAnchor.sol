@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-contract GeodataAnchor {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract GeodataAnchor is Ownable {
 
     struct Anchor {
         bytes32 hash;
@@ -20,7 +22,7 @@ contract GeodataAnchor {
     }
 
     // add anchor
-    function addAnchor(string memory _id, bytes32 _hash) public {
+    function addAnchor(string memory _id, bytes32 _hash) public onlyOwner {
         // see if anchor already exists
         Anchor storage anchor = anchors[_id];
         require(anchor.hash == 0, "Anchor id already exists");
