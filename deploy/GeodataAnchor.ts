@@ -8,6 +8,7 @@ const geodataAnchorDeployFunc: DeployFunction = async (
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
+  console.log("Deployer:", deployer);
 
   const geodataAnchorDeployment = await deploy("GeodataAnchor", {
     from: deployer,
