@@ -64,6 +64,13 @@ describe("geodata anchor contract", () => {
         geodataAnchor.addAnchor("AczsesvKyE4MD9Lo3RNgA", hash)
       ).to.be.revertedWith("Anchor id already exists");
     });
+    it("revert when adding an empty hash", async () => {
+      const hash =
+        "0x0000000000000000000000000000000000000000000000000000000000000000";
+      await expect(
+        geodataAnchor.addAnchor("AczsesvKyE4MD9Lo3RNgA", hash)
+      ).to.be.revertedWith("Empty hash");
+    });
     it("revert when anchor not found", async () => {
       await expect(
         geodataAnchor.getAnchor("AczsesvKyE4MD9Lo3RNgA")

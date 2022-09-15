@@ -13,7 +13,7 @@ contract GeodataAnchor is Ownable {
 
     // get anchor
     function getAnchor(string memory _id) public view returns (bytes32) {
-        Anchor storage anchor = anchors[_id];
+        Anchor memory anchor = anchors[_id];
         if (anchor.hash == 0) {
             revert("Anchor not found");
         }
@@ -23,12 +23,12 @@ contract GeodataAnchor is Ownable {
 
     // add anchor
     function addAnchor(string memory _id, bytes32 _hash) public onlyOwner {
-        // see if anchor already exists
-        Anchor storage anchor = anchors[_id];
+        Anchor memory anchor = anchors[_id];
         require(anchor.hash == 0, "Anchor id already exists");
+        require(_hash != 0, "Empty hash");
 
-        Anchor memory newAnchor = Anchor(_hash);
-        anchors[_id] = newAnchor;
+        anchor.hash = _hash;
+        anchors[_id] = anchor;
     }
 
 }
