@@ -11,6 +11,8 @@ import "hardhat-deploy-ethers";
 
 // eslint-disable-next-line node/no-missing-import
 import "./tasks/operations/accounts";
+// eslint-disable-next-line node/no-missing-import
+import "./tasks/operations/anchor";
 dotEnvConfig();
 
 const CELO_MNEMONIC = process.env.mnemonic;
