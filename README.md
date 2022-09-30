@@ -26,30 +26,53 @@ yarn test
 yarn lint
 ```
 
-## Generate CELO Private Key
+## Install Celo CLI
 
-### CELO CLI
+[Documentation on Celo CLI](https://docs.celo.org/cli/account)
 
 ```sh
 npm install -g @celo/celocli
 ```
 
-### Create new account and save details to .env file
+## Generate Celo Private Key for Alfajores testnet
+
+### Create new account on Alfajores testnet and save details to .env file
 
 Warning: *do not check in the .env file with your mnemonic or privateKey to a repository*
 
 ```sh
 celocli config:set --node https://alfajores-forno.celo-testnet.org/
-celocli account:new | sed -E 's/: (.+)/="\1"/g' | grep '=' > .env
+celocli account:new | sed -E 's/: (.+)/=\1/g' | grep '=' > .env
 ```
 
-### Fund your account
+### Fund your Alfajores testnet account
 
-copy your address and visit:
+copy your `address` from the .env file and visit:
 
 <https://celo.org/developers/faucet>
 
-### Check your balance
+Check your balance:
+
+```sh
+celocli account:balance <YOUR ADDRESS>
+```
+
+## Generate Celo Private Key for Celo mainnet
+
+### Create new account on Celo mainnet and save details to .env file
+
+Warning: *do not check in the .env file with your mnemonic or privateKey to a repository*
+
+```sh
+celocli config:set --node https://forno.celo.org
+celocli account:new | sed -E 's/: (.+)/=\1/g' | grep '=' > .env
+```
+
+### Fund your Celo mainnet account
+
+Purchase CELO on a [crypto exchange](https://celo.org/buy) or [bridge](https://docs.celo.org/protocol/bridge) tokens from another network.
+
+Check your balance:
 
 ```sh
 celocli account:balance <YOUR ADDRESS>
