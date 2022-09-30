@@ -107,7 +107,7 @@
       "chainId": "44787",
       "contracts": {
         "GeodataAnchor": {
-          "address": "0xf0c8e28a83DBf85FaaFE8fb453F5e47C2DfCA5eC",
+          "address": "0x982352411cd9B0F677ff5A7d56a4C7CCc2e37714",
           "abi": [
             {
               "anonymous": false,
