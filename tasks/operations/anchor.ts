@@ -26,10 +26,18 @@ task(TASK_ANCHOR, "Anchors a value", async (_taskArgs, hre) => {
   ) as GeodataAnchor;
 
   const hash =
-    "0xee97c1d8471ee4f1d8831fc50923c90a030b45d2f3b9d29b952cf46f4081f689";
+    "0x0097c1d8471ee4f1d8831fc50923c90a030b45d2f3b9d29b952cf46f4081f689";
+  const anchorId = "fAEYmCYqmXScbpXKJaCvy";
+
+  const bigNumber = ethers.BigNumber.from(hash);
   const addTx: ContractTransaction = await geodataAnchor
     .connect(deployer)
-    .addAnchor("fAEYmCYqmXScbpXKJaCvr", hash);
+    .addAnchor(anchorId, ethers.utils.zeroPad(bigNumber._hex, 32));
   const addReceipt: ContractReceipt = await addTx.wait();
   console.log(addReceipt);
+
+  const hashReturned = await geodataAnchor.getAnchor(anchorId);
+  if (hashReturned === hash) {
+    console.log("anchor added: ", hashReturned);
+  }
 });
