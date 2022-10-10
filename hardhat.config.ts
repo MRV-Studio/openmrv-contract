@@ -28,6 +28,9 @@ const accounts: HttpNetworkHDAccountsConfig = {
   passphrase: "",
 };
 
+// const CELO_PRIVATE_KEY = process.env.privateKey || "";
+// const accounts = [CELO_PRIVATE_KEY];
+
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [{ version: "0.8.13", settings: {} }],
