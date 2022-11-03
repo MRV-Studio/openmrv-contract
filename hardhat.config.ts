@@ -1,13 +1,15 @@
 import { config as dotEnvConfig } from "dotenv";
 
 import { HardhatUserConfig, HttpNetworkHDAccountsConfig } from "hardhat/types";
-import "@nomiclabs/hardhat-waffle";
+import "@nomicfoundation/hardhat-chai-matchers";
 import "@nomiclabs/hardhat-solhint";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import "@nomiclabs/hardhat-ethers";
+import "hardhat-celo";
 
 // eslint-disable-next-line node/no-missing-import
 import "./tasks/operations/accounts";
@@ -16,6 +18,7 @@ import "./tasks/operations/anchor";
 dotEnvConfig();
 
 const CELO_MNEMONIC = process.env.mnemonic;
+// bip 44 format m / purpose' / coin_type' / account' / change / index
 const CELO_DERIVATION_PATH = "m/44'/52752'/0'/0/";
 
 const accounts: HttpNetworkHDAccountsConfig = {
@@ -60,6 +63,22 @@ const config: HardhatUserConfig = {
       accounts,
       chainId: 42220,
     },
+  },
+  etherscan: {
+    apiKey: {
+      alfajores: process.env.celoscanapikey || "",
+      celo: process.env.celoscanapikey || "",
+    },
+    customChains: [
+      {
+        network: "celo",
+        chainId: 42220,
+        urls: {
+          apiURL: "https://api.celoscan.io/api",
+          browserURL: "https://celoscan.io",
+        },
+      },
+    ],
   },
   gasReporter: {
     enabled: !!process.env.REPORT_GAS,

@@ -28,8 +28,8 @@ module.exports = {
         "error",
         {
           allowModules: ["hardhat", "hardhat-deploy", "chai", "ethers", "hardhat-deploy-ethers",
-          "dotenv", "@nomiclabs/hardhat-ethers", "@nomiclabs/hardhat-waffle", "@nomiclabs/hardhat-solhint",
-          "@typechain/hardhat", "hardhat-gas-reporter", "solidity-coverage"],
+          "dotenv", "@nomicfoundation/hardhat-chai-matchers", "@nomiclabs/hardhat-ethers", "@nomiclabs/hardhat-solhint",
+          "@typechain/hardhat", "hardhat-celo", "hardhat-gas-reporter", "solidity-coverage"],
         },
       ],
       "node/no-missing-import": [
